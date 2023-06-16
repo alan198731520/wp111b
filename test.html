@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>繪製笑臉</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas" width="400" height="400"></canvas>
+  
+  <script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    
+    // 繪製黃色的臉部
+    ctx.beginPath();
+    ctx.arc(200, 200, 150, 0, Math.PI * 2, false);
+    ctx.fillStyle = "#FDD835";
+    ctx.fill();
+    ctx.closePath();
+    
+    // 繪製黑色的眼睛
+    ctx.beginPath();
+    ctx.arc(140, 140, 30, 0, Math.PI * 2, false);
+    ctx.arc(260, 140, 30, 0, Math.PI * 2, false);
+    ctx.fillStyle = "#000000";
+    ctx.fill();
+    ctx.closePath();
+    
+    // 繪製紅色的嘴巴
+    ctx.beginPath();
+    ctx.arc(200, 220, 80, Math.PI * 0.1, Math.PI * 0.9, false);
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = "#FF0000";
+    ctx.stroke();
+    ctx.closePath();
+    
+    // 繪製黑色的眉毛
+    ctx.beginPath();
+    ctx.moveTo(110, 100);
+    ctx.quadraticCurveTo(140, 80, 170, 100);
+    ctx.moveTo(230, 100);
+    ctx.quadraticCurveTo(260, 80, 290, 100);
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "#000000";
+    ctx.stroke();
+    ctx.closePath();
+  </script>
+</body>
+</html>
+    

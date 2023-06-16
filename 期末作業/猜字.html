@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>猜字填空遊戲</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    .message {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    
+    .input-group {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    
+    .hint {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>猜字填空遊戲</h1>
+  
+  <div class="message"></div>
+  
+  <div class="input-group">
+    <label for="guess">請猜測下面空格中的字：</label>
+    <input type="text" id="guess">
+    <button onclick="checkGuess()">猜！</button>
+  </div>
+  
+  <div class="hint">
+    <button onclick="showHint()">顯示提示</button>
+    <span id="hintText"></span>
+    <button onclick="nextQuestion()" style="display: none;">更新</button>
+  </div>
+  
+  <script>
+    var questions = [
+      { word: "金門大學", hint: "一間大學" },
+      { word: "資訊工程學系", hint: "最棒的學系" },
+      { word: "范祐綸", hint: "作者的名字" }
+    ];
+    
+    var currentQuestionIndex = 0;
+    var currentQuestion = questions[currentQuestionIndex];
+    
+    var answer = currentQuestion.word;
+    var hint = currentQuestion.hint;
+    
+    var blanks = "";
+    var attempts = 0;
+    
+    for (var i = 0; i < answer.length; i++) {
+      if (answer[i] !== " ") {
+        blanks += "_";
+      } else {
+        blanks += " ";
+      }
+    }
+    
+    var messageElement = document.querySelector(".message");
+    var hintTextElement = document.getElementById("hintText");
+    var updateButton = document.querySelector(".hint button:nth-of-type(2)");
+    var guessInput = document.getElementById("guess");
+    
+    messageElement.textContent = blanks;
+    
+    function checkGuess() {
+      var guess = guessInput.value.trim();
+      
+      if (guess === answer) {
+        messageElement.textContent = "恭喜你！猜對了！";
+        messageElement.style.color = "green";
+        guessInput.disabled = true;
+        updateButton.style.display = "inline";
+      } else {
+        attempts++;
+        
+        messageElement.textContent = "猜錯了，再試一次！";
+        messageElement.style.color = "red";
+      }
+      
+      guessInput.value = "";
+      guessInput.focus();
+    }
+    
+    function showHint() {
+      hintTextElement.textContent = hint;
+    }
+    
+    function nextQuestion() {
+      currentQuestionIndex++;
+      
+      if (currentQuestionIndex < questions.length) {
+        currentQuestion = questions[currentQuestionIndex];
+        
+        answer = currentQuestion.word;
+        hint = currentQuestion.hint;
+        
+        blanks = "";
+        attempts = 0;
+        
+        for (var i = 0; i < answer.length; i++) {
+          if (answer[i] !== " ") {
+            blanks += "_";
+          } else {
+            blanks += " ";
+          }
+        }
+        
+        messageElement.textContent = blanks;
+        hintTextElement.textContent = "";
+        updateButton.style.display = "none";
+        messageElement.style.color = "black";
+        guessInput.disabled = false;
+      } else {
+        // 所有題目都已回答完畢
+        messageElement.textContent = "恭喜你猜到了所有答案，遊戲結束！";
+        hintTextElement.textContent = "";
+        updateButton.style.display = "none";
+        guessInput.disabled = true;
+      }
+    }
+  </script>
+</body>
+</html>
+
+<!-- 以上架構皆為chatgpt，本人已閱讀也已了解，並有稍作修改 -->
